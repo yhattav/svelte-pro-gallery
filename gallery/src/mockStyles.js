@@ -5,7 +5,7 @@ const styles = {
   loveButton: true,
   isStoreGallery: false,
   loveCounter: false,
-  allowTitle: false,
+  allowTitle: true,
   allowTitleExpand: true,
   allowDescriptionExpand: true,
   allowLinkExpand: true,
