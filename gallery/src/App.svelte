@@ -1,29 +1,51 @@
 <script>
    import Moveable from "svelte-moveable";
+   import { resizeMediaUrl } from './itemResizer';
     let target, scroller;
     import {testImages} from './images.js'
     import {BlueprintsManager, viewModeWrapper, utils } from 'pro-gallery-lib'
     import {styles} from './mockStyles.js'
     import Gallery from './Gallery.svelte';
-    import {mixAndSlice} from './Utils.js'
+    import {mixAndSlice, debounce} from './Utils.js'
+    import { setContext } from 'svelte';
+
+    setContext('eventsListener', {
+      onClick: (item, index) => console.log('Item Clicked', index, item),
+      onHover: (item, index) => console.log('Item Hovered', index, item),
+      onShareClicked: (item, index) => console.log('Item Share Clicked', index, item),
+    });
     let frame = {
         translate: [0,0],
     };
+
     export let viewMode = 'PREVIEW', formFactor = 'mobile' ;
     let items = mixAndSlice(testImages,10);
     init();
     const blueprintsManager = new BlueprintsManager({id: 'svelte-pg'});
     let container, blueprint, windowWidth = 980, windowHeight = 500,containerTop = 100;
-    $:container = {
+    container = {
         width: windowWidth,
         height: windowHeight,
         scrollBase: containerTop,
     }
+    // $:console.log('>>>>>>>>', windowWidth,windowHeight)
+    //$: (windowWidth,windowHeight)=>{debounce(console.log('>>>>>>>>!!!!!!!!!!!!!!!!!!!!!!!!!!', windowWidth,windowHeight),500)};
+    $: debouncedSetContainer(windowWidth,windowHeight,containerTop);
     $:params = {container, items, styles};
     $:getBlueprint(params);
-    $:console.log('<<<<', containerTop)
+    // $:console.log('<<<<', containerTop)
     // $:console.log('>>>>>blueprint changes', blueprint);
     // $:console.log('<<<<<', windowWidth, windowHeight, container)
+
+    const setContainer = (width, height, scrollBase) =>{
+      container = {
+              width: windowWidth,
+              height: windowHeight,
+              scrollBase: containerTop,
+          };
+    }
+    const debouncedSetContainer =   debounce(setContainer, 50);     
+
     async function getBlueprint(params) {
         blueprint = await blueprintsManager.createBlueprint(params);
     }
@@ -47,7 +69,7 @@
 </script>
 
 <div class="target" bind:clientWidth={windowWidth} bind:clientHeight={windowHeight} bind:this={target}>
-  <Gallery {...blueprint}/>
+  <Gallery {...blueprint} {resizeMediaUrl}/>
 </div>
 <Moveable
     target={target}

@@ -3,7 +3,7 @@ import { getContext } from 'svelte';
 const { getStyles } = getContext('galleryContext');
 const styles = getStyles();
     export let item = {};
-    $:console.log(styles);
+    // $:console.log(styles);
     $:title = item.dto.metadata.title;
     $:description = item.dto.metadata.description;
 </script>
