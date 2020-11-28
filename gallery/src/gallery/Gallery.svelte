@@ -9,7 +9,7 @@
 	setContext('galleryContext', {
 		getStyles: () => styles
 	});
-
+	// $: console.log('structure in the gallery itself ', structure);
 	$: galleryStructure = getGalleryStructure(structure, styles);
 	$: colorSchemeStyleString = getColorSchemeStyles(styles);
 	const getGalleryStructure = (structure, styles) => {

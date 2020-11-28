@@ -1,5 +1,5 @@
 <script>
-import {getRandomColor} from './Utils.js'
+import {getRandomColor} from '../utils.js'
 import Hover from './Hover.svelte';
 import Image from './Image.svelte';
 import { getContext } from 'svelte';
