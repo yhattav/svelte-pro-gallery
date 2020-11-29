@@ -64,8 +64,19 @@
 
 </script>
 
-<div id="playground-container">
+<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/slate/bootstrap.min.css'>
+
+<div id="playground-container" class="playground-container container-fluid">
+  <div class="row playground-row">
+
+    <div class="col sidebar-column no-padding">
+  <SideBar/>
+    </div>
+    <div class="col gallery-board-column no-padding">
   <GalleryBoard {blueprint} {resizeMediaUrl}/>
+    </div>
+  </div>
+
 </div>
 
 <style>
@@ -74,5 +85,22 @@
     height: 100%;
     margin: 0;
     padding: 0;
+}
+
+div {
+  border: 1px solid #333;
+}
+.playground-container {
+  height: 100%;
+}
+.playground-row {
+  height: 100%;
+}
+.sidebar-column {
+  max-width: 200px;
+  /* height: 1vh; */
+}
+.no-padding {
+  padding: 0;
 }
 </style>
